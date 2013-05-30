@@ -38,11 +38,14 @@ var Jr = Jr || {};
       SLIDE_OVER: 'SLIDE_OVER'
     },
     navigate: function(url, opts) {
+      if (this.rendering) return;
       this.history.push(opts);
       this.backButtonFlag = false;
       return Backbone.history.navigate(url, opts);
     },
     renderView: function(mainEl, view) {
+      if (this.rendering) return;
+      this.rendering = true;
       var animation, newEl;
       animation = this.history.length > 0 ? this.history[this.history.length -1].animation : null;
       if (animation) {
@@ -53,7 +56,8 @@ var Jr = Jr || {};
         return this.afterAnimation();
       } else {
         this.resetContent(mainEl, view);
-        return this.normalRenderView(mainEl, view);
+        this.normalRenderView(mainEl, view);
+        this.rendering = false;
       }
     },
     normalRenderView: function(mainEl, view) {
@@ -82,7 +86,7 @@ var Jr = Jr || {};
       }
     },
     doAnimation: function(fromEl, toEl, type, direction) {
-      var after, next;
+      var after, next, _this = this;
       $('#app-container').prepend(toEl);
       toEl.addClass('animate-to-view').addClass(direction).addClass('initial');
       $('#app-container').addClass('animate');
@@ -95,10 +99,12 @@ var Jr = Jr || {};
         fromEl.remove();
         toEl.attr('id', 'app-main');
         toEl.removeClass('animate-to-view').removeClass(direction);
-        return $('#app-container').removeClass('animate').removeClass(direction);
+        $('#app-container').removeClass('animate').removeClass(direction);
+        _this.rendering = false;
       };
       return setTimeout(after, 400);
-    }
+    },
+    rendering: false
   };
 
   Jr.Router = Backbone.Router.extend({
