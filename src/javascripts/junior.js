@@ -87,11 +87,11 @@ var Jr = Jr || {};
       }
     },
     doAnimation: function(fromEl, toEl, type, direction) {
-      var after, next, _this = this;
-      $('#app-container').prepend(toEl);
+      var after, next, _this = this, appContainer = $('#app-container');
+      appContainer.prepend(toEl);
       toEl.addClass('animate-to-view').addClass(direction).addClass('initial');
-      $('#app-container').addClass('animate');
-      $('#app-container').addClass(direction);
+      appContainer.addClass('animate');
+      appContainer.addClass(direction);
       next = function() {
         toEl.removeClass('initial');
         setTimeout(after, 400);
@@ -100,7 +100,7 @@ var Jr = Jr || {};
         fromEl.remove();
         toEl.attr('id', 'app-main');
         toEl.removeClass('animate-to-view').removeClass(direction);
-        $('#app-container').removeClass('animate').removeClass(direction);
+        appContainer.removeClass('animate').removeClass(direction);
         _this.rendering = false;
       };
       setTimeout(next, 1);
