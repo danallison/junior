@@ -93,9 +93,9 @@ var Jr = Jr || {};
       $('#app-container').addClass('animate');
       $('#app-container').addClass(direction);
       next = function() {
-        return toEl.removeClass('initial');
+        toEl.removeClass('initial');
+        setTimeout(after, 400);
       };
-      setTimeout(next, 1);
       after = function() {
         fromEl.remove();
         toEl.attr('id', 'app-main');
@@ -103,7 +103,7 @@ var Jr = Jr || {};
         $('#app-container').removeClass('animate').removeClass(direction);
         _this.rendering = false;
       };
-      return setTimeout(after, 400);
+      setTimeout(next, 1);
     }
   };
 
