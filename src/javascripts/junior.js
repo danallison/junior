@@ -20,6 +20,7 @@ var Jr = Jr || {};
 
   Jr.Navigator = {
     backButtonFlag: true,
+    rendering: false,
     history: [],
     directions: {
       UP: 'UP',
@@ -103,8 +104,7 @@ var Jr = Jr || {};
         _this.rendering = false;
       };
       return setTimeout(after, 400);
-    },
-    rendering: false
+    }
   };
 
   Jr.Router = Backbone.Router.extend({
